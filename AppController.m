@@ -26,8 +26,8 @@ static void unlock(void *data, void *id, void * const *p_pixels)
 	if (lastImage != nil)
 		[lastImage release];
 	AppController *self = (AppController *)data;
-	NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(640, 480)];
-	NSImageRep *irep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&pixels pixelsWide:640 pixelsHigh:480 bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:NSDeviceRGBColorSpace bytesPerRow:640 * 4 bitsPerPixel:32];
+	NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(512, 512)];
+	NSImageRep *irep = [[NSBitmapImageRep alloc] initWithBitmapDataPlanes:&pixels pixelsWide:512 pixelsHigh:512 bitsPerSample:8 samplesPerPixel:4 hasAlpha:YES isPlanar:NO colorSpaceName:NSDeviceRGBColorSpace bytesPerRow:512 * 4 bitsPerPixel:32];
 	[image addRepresentation:irep];
 	[irep release];
 	
@@ -61,7 +61,7 @@ static void display(void *data, void *id)
 - (IBAction)playFile:(id)sender
 {
 	lastImage = nil;
-	pixels = malloc(640 * 480 * 4);
+	pixels = malloc(512 * 512 * 4);
 	libvlc_instance_t * inst;
 	libvlc_media_player_t *mp;
 	libvlc_media_t *m;
@@ -77,7 +77,7 @@ static void display(void *data, void *id)
 	libvlc_media_release(m);
 	
 	libvlc_video_set_callbacks(mp, lock, unlock, display, self);
-	libvlc_video_set_format(mp, "RGBA", 640, 480, 640 * 4);
+	libvlc_video_set_format(mp, "RGBA", 512, 512, 512 * 4);
 	libvlc_media_player_play(mp);
 	[window setStyleMask:NSBorderlessWindowMask];
 	[window setFrame:[[NSScreen mainScreen] frame] display:YES];
