@@ -46,28 +46,6 @@ static void display(void *data, void *id)
 	if(![qcView loadCompositionFromFile:[[NSBundle mainBundle] pathForResource:@"composition" ofType:@"qtz"]]) {
 		NSLog(@"Could not load composition");
 	}
-	lastImage = nil;
-	pixels = malloc(640 * 480 * 4);
-	libvlc_instance_t * inst;
-	libvlc_media_player_t *mp;
-	libvlc_media_t *m;
-	
-	/* Load the VLC engine */
-	inst = libvlc_new (0, NULL);
-	
-	/* Create a new item */
-	m = libvlc_media_new_path (inst, "file://localhost/Users/mdonoughe/Downloads/sintel-1280-surround.mp4");
-	
-	/* Create a media player playing environement */
-	mp = libvlc_media_player_new_from_media (m);
-	libvlc_media_release(m);
-
-	libvlc_video_set_callbacks(mp, lock, unlock, display, self);
-	libvlc_video_set_format(mp, "RGBA", 640, 480, 640 * 4);
-	libvlc_media_player_play(mp);
-	[window setStyleMask:NSBorderlessWindowMask];
-	[window setFrame:[[NSScreen mainScreen] frame] display:YES];
-	[window setLevel:CGShieldingWindowLevel()];
 }
 
 - (void)windowWillClose:(NSNotification *)notification 
@@ -78,6 +56,36 @@ static void display(void *data, void *id)
 - (QCView*)qcView
 {
 	return qcView;
+}
+
+- (IBAction)playFile:(id)sender
+{
+	lastImage = nil;
+	pixels = malloc(640 * 480 * 4);
+	libvlc_instance_t * inst;
+	libvlc_media_player_t *mp;
+	libvlc_media_t *m;
+	
+	/* Load the VLC engine */
+	inst = libvlc_new (0, NULL);
+	
+	/* Create a new item */
+	m = libvlc_media_new_path (inst, [[inputField stringValue] UTF8String]);
+	
+	/* Create a media player playing environement */
+	mp = libvlc_media_player_new_from_media (m);
+	libvlc_media_release(m);
+	
+	libvlc_video_set_callbacks(mp, lock, unlock, display, self);
+	libvlc_video_set_format(mp, "RGBA", 640, 480, 640 * 4);
+	libvlc_media_player_play(mp);
+	[window setStyleMask:NSBorderlessWindowMask];
+	[window setFrame:[[NSScreen mainScreen] frame] display:YES];
+	[window setLevel:CGShieldingWindowLevel()];
+	// show
+	[window makeKeyAndOrderFront:nil];
+	// hide
+	[inputWindow orderOut:nil];
 }
 
 @end

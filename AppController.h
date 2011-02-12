@@ -13,8 +13,11 @@
 {
     IBOutlet QCView* qcView;
 	IBOutlet NSWindow* window;
+	IBOutlet NSWindow* inputWindow;
+	IBOutlet NSTextField* inputField;
 }
 
 - (QCView*)qcView;
+- (IBAction)playFile:(id)e;
 
 @end
