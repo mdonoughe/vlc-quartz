@@ -1,0 +1,9 @@
+This program uses libVLC to play back a video and run the frames through Quartz
+Composer.
+
+You can edit the composition file so long as your file has an image input named
+"Image".
+
+This is not a VLC plugin.
+
+This is a bad hack and does not try to shutdown cleanly.
