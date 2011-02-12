@@ -1,0 +1,4 @@
+/build/
+/video.xcodeproj/*.mode1v3
+/video.xcodeproj/*.pbxuser
+/video_Prefix.pch
