@@ -81,6 +81,7 @@ static void display(void *data, void *id)
 	libvlc_media_player_play(mp);
 	[window setStyleMask:NSBorderlessWindowMask];
 	[window setFrame:[[NSScreen mainScreen] frame] display:YES];
+	[NSCursor hide];
 	[window setLevel:CGShieldingWindowLevel()];
 	// show
 	[window makeKeyAndOrderFront:nil];
